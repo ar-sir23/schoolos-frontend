@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/landing/index.html" },
+    { "source": "/((?!landing|app|signup|static|logos|favicon.ico|manifest.json|robots.txt).*)", "destination": "/app" }
+  ]
+}
