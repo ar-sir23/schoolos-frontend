@@ -268,11 +268,11 @@ function AppContent(){const{user}=useAuth();return user?<AppShell/>:<Login/>;}
 
 export default function App(){
   return (
-    <BrowserRouter>
+    <><BrowserRouter>
       <Routes>
         <Route path="/signup" element={<Signup/>} />
         <Route path="*" element={<AuthProvider><AppContent/></AuthProvider>} />
       </Routes>
-    </BrowserRouter><Analytics/>
+    </BrowserRouter><Analytics/></>
   );
 }
