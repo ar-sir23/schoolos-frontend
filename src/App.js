@@ -271,8 +271,8 @@ export default function App(){
     <BrowserRouter>
       <Routes>
         <Route path="/signup" element={<Signup/>} />
-        <Route path="*" element={<AuthProvider><AppContent/></AuthProvider>} /><Analytics/>
+        <Route path="*" element={<AuthProvider><AppContent/></AuthProvider>} />
       </Routes>
-    </BrowserRouter>
+    </BrowserRouter><Analytics/>
   );
 }
