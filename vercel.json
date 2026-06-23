@@ -1,11 +1,8 @@
 {
-  "redirects": [
-    { "source": "/", "destination": "/landing/index.html", "permanent": false }
-  ],
   "rewrites": [
-    { "source": "/landing/(.*)", "destination": "/landing/$1" },
-    { "source": "/app/(.*)", "destination": "/index.html" },
-    { "source": "/app", "destination": "/index.html" },
-    { "source": "/signup", "destination": "/index.html" }
+    { "source": "/app", "destination": "/app/index.html" },
+    { "source": "/app/(.*)", "destination": "/app/index.html" },
+    { "source": "/signup", "destination": "/app/index.html" },
+    { "source": "/landing/(.*)", "destination": "/landing/$1" }
   ]
 }
