@@ -16,6 +16,7 @@ import RiskScoring from './pages/RiskScoring';
 import SmartAlerts from './pages/SmartAlerts';
 import ParentPortal from './pages/ParentPortal';
 import './styles/dashboard.css';
+import { Analytics } from '@vercel/analytics/react';
 import { getSchoolConfig } from './config/schools';
 
 const NOTIFICATIONS = [
