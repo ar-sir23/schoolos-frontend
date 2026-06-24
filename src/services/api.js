@@ -17,6 +17,7 @@ export const login = (username, password) =>
   API.post('/api/auth/token/', { username, password });
 
 export const getStudents = () => API.get('/api/students/').catch(() => ({data:{results:[]}}));
+export const addStudent = (data) => API.post('/api/students/', data);
 export const getAttendance = () => API.get('/api/attendance/').catch(() => ({data:{results:[]}}));
 export const getFees = () => API.get('/api/fees/').catch(() => ({data:{results:[]}}));
 export const chatWithAI = (message, studentId, history) =>

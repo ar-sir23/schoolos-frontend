@@ -22,19 +22,13 @@ export default function AddStudentModal({ onClose }) {
     }
     setLoading(true);
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
-      const token = localStorage.getItem('token');
-      const res = await fetch(`${API_URL}/api/students/`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json();
-      if (data.success) {
+      const { addStudent } = await import('../services/api');
+      const res = await addStudent(form);
+      if (res.data.success) {
         setSuccess(true);
         setTimeout(() => { onClose(true); }, 1500);
       } else {
-        alert('Error: ' + (data.error || 'Could not add student'));
+        alert('Error: ' + (res.data.error || 'Could not add student'));
       }
     } catch(e) {
       alert('Connection error. Please try again.');
