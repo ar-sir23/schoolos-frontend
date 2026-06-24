@@ -103,7 +103,7 @@ export default function Landing(){
         <div style={{fontSize:15,color:'#8B9BB8',textAlign:'center',maxWidth:400,margin:'0 auto 48px',lineHeight:1.6}}>No per-student fees. No hidden charges. Cancel anytime.</div>
         <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:16,maxWidth:960,margin:'0 auto'}}>
           {PLANS.map(p=>(
-            <div key={p.name} style={{background:'#0A0D14',border:`1px solid ${p.primary?'#3B82F6':'#1E2A3D'}`,borderRadius:16,padding:24,position:'relative',background:p.primary?'linear-gradient(180deg,rgba(59,130,246,.05) 0%,#0A0D14 100%)':'#0A0D14'}}>
+            <div key={p.name} style={{background:p.primary?'linear-gradient(180deg,rgba(59,130,246,.05) 0%,#0A0D14 100%)':'#0A0D14',border:`1px solid ${p.primary?'#3B82F6':'#1E2A3D'}`,borderRadius:16,padding:24,position:'relative'}}>
               {p.primary&&<div style={{position:'absolute',top:-12,left:'50%',transform:'translateX(-50%)',background:'#3B82F6',color:'#fff',fontSize:10,fontWeight:700,padding:'3px 12px',borderRadius:20}}>MOST POPULAR</div>}
               <div style={{fontSize:13,fontWeight:600,color:'#8B9BB8',marginBottom:8,textTransform:'uppercase',letterSpacing:'.06em'}}>{p.name}</div>
               <div style={{fontSize:28,fontWeight:700,color:'#F0F4FF',marginBottom:4}}>{p.price}<span style={{fontSize:13,fontWeight:400,color:'#4A5568'}}>/mo</span></div>
