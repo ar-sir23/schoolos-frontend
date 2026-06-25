@@ -24,7 +24,7 @@ export default function AddTeacherModal({ onClose }) {
     await new Promise(r => setTimeout(r, 1000));
     setLoading(false);
     setSuccess(true);
-    setTimeout(() => onClose(), 1500);
+    setTimeout(() => onClose(form), 1500);
   };
 
   return (

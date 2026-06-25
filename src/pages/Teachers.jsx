@@ -1,7 +1,7 @@
 import AddTeacherModal from '../components/AddTeacherModal';
 import React, { useState } from 'react';
 
-const TEACHERS = [
+const INITIAL_TEACHERS = [
   {id:'TCH-001',name:'Dr. Nasrin Sultana',initials:'NS',dept:'Science',       subjects:['Biology','Chemistry'], cls:3,students:124,exp:'12 yrs',joined:'2012',status:'Present',rating:4.8,avBg:'#1E3A5F',avColor:'#3B82F6',classes:[{name:'Class 10-A',sub:'Biology',time:'8:00 AM'},{name:'Class 9-B',sub:'Chemistry',time:'10:00 AM'}]},
   {id:'TCH-002',name:'Mr. Kamal Hossain', initials:'KH',dept:'Mathematics',   subjects:['Math','Statistics'],   cls:4,students:168,exp:'8 yrs', joined:'2016',status:'Present',rating:4.6,avBg:'#2E1065',avColor:'#8B5CF6',classes:[{name:'Class 10-A',sub:'Math',time:'9:00 AM'},{name:'Class 9-A',sub:'Statistics',time:'11:00 AM'}]},
   {id:'TCH-003',name:'Ms. Fatema Khanom', initials:'FK',dept:'Languages',     subjects:['English','Bengali'],   cls:3,students:132,exp:'6 yrs', joined:'2018',status:'Present',rating:4.9,avBg:'#064E3B',avColor:'#10B981',classes:[{name:'Class 8-B',sub:'English',time:'8:00 AM'},{name:'Class 7-A',sub:'Bengali',time:'11:00 AM'}]},
@@ -57,18 +57,37 @@ export default function Teachers(){
   const[addTeacher,setAddTeacher]=useState(false);
   const[search,setSearch]=useState('');
   const[selected,setSelected]=useState(null);
-  const filtered=TEACHERS.filter(t=>t.name.toLowerCase().includes(search.toLowerCase())||t.dept.toLowerCase().includes(search.toLowerCase())||t.subjects.some(s=>s.toLowerCase().includes(search.toLowerCase())));
+  const filtered=teacherList.filter(t=>t.name.toLowerCase().includes(search.toLowerCase())||t.dept.toLowerCase().includes(search.toLowerCase())||t.subjects.some(s=>s.toLowerCase().includes(search.toLowerCase())));
   const inp={padding:'8px 12px',border:'1px solid var(--border)',borderRadius:8,background:'var(--bg2)',color:'var(--text2)',fontSize:13,outline:'none',cursor:'pointer'};
   return(
     <div className="main">
-      {addTeacher&&<AddTeacherModal onClose={()=>setAddTeacher(false)}/>}
+      {addTeacher&&<AddTeacherModal onClose={(teacher)=>{
+      setAddTeacher(false);
+      if(teacher){
+        setTeacherList(t=>[...t,{
+          id:`TCH-00${t.length+1}`,
+          name:teacher.full_name,
+          initials:teacher.full_name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase(),
+          dept:teacher.department||'General',
+          subjects:[teacher.subjects||''],
+          cls:'TBD',
+          exp:'New',
+          phone:teacher.phone||'',
+          email:teacher.email||'',
+          rating:4.0,
+          students:0,
+          status:'Active',
+          avBg:'#1E3A5F',avColor:'#3B82F6'
+        }]);
+      }
+    }}/>}
       {selected&&<TeacherDrawer teacher={selected} onClose={()=>setSelected(null)}/>}
       <div className="page-header">
         <div><div className="page-title">Teachers</div><div className="page-sub">{TEACHERS.length} staff members · Term 2, 2026</div></div>
         <div className="btn-group"><button className="btn">⬇ Export</button><button className="btn">📊 Performance</button><button className="btn btn-primary" onClick={()=>setAddTeacher(true)}>+ Add teacher</button></div>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:12,marginBottom:20}}>
-        {[{icon:'👨‍🏫',label:'Total staff',value:TEACHERS.length,sub:'active',cls:'info',bg:'var(--blue-dim)',color:'var(--blue)'},{icon:'✅',label:'Present',value:TEACHERS.filter(t=>t.status==='Present').length,sub:'today',cls:'up',bg:'var(--green-dim)',color:'var(--green)'},{icon:'📚',label:'Classes',value:124,sub:'scheduled',cls:'info',bg:'var(--purple-dim)',color:'var(--purple)'},{icon:'📋',label:'Reports',value:12,sub:'pending',cls:'warn',bg:'var(--amber-dim)',color:'var(--amber)'}].map(m=>(
+        {[{icon:'👨‍🏫',label:'Total staff',value:TEACHERS.length,sub:'active',cls:'info',bg:'var(--blue-dim)',color:'var(--blue)'},{icon:'✅',label:'Present',value:teacherList.filter(t=>t.status==='Present').length,sub:'today',cls:'up',bg:'var(--green-dim)',color:'var(--green)'},{icon:'📚',label:'Classes',value:124,sub:'scheduled',cls:'info',bg:'var(--purple-dim)',color:'var(--purple)'},{icon:'📋',label:'Reports',value:12,sub:'pending',cls:'warn',bg:'var(--amber-dim)',color:'var(--amber)'}].map(m=>(
           <div key={m.label} style={{background:'var(--bg2)',border:'1px solid var(--border)',borderRadius:12,padding:'14px 16px'}}>
             <div style={{width:36,height:36,borderRadius:10,background:m.bg,color:m.color,display:'flex',alignItems:'center',justifyContent:'center',fontSize:17,marginBottom:10}}>{m.icon}</div>
             <div style={{fontSize:11,color:'var(--text3)',textTransform:'uppercase',letterSpacing:'.04em',marginBottom:4}}>{m.label}</div>
