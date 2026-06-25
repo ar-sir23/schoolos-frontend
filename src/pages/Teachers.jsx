@@ -53,6 +53,7 @@ function TeacherDrawer({teacher,onClose}){
 }
 
 export default function Teachers(){
+  const[teacherList,setTeacherList]=useState(INITIAL_TEACHERS);
   const[view,setView]=useState('grid');
   const[addTeacher,setAddTeacher]=useState(false);
   const[search,setSearch]=useState('');
@@ -83,11 +84,11 @@ export default function Teachers(){
     }}/>}
       {selected&&<TeacherDrawer teacher={selected} onClose={()=>setSelected(null)}/>}
       <div className="page-header">
-        <div><div className="page-title">Teachers</div><div className="page-sub">{TEACHERS.length} staff members · Term 2, 2026</div></div>
+        <div><div className="page-title">Teachers</div><div className="page-sub">{teacherList.length} staff members · Term 2, 2026</div></div>
         <div className="btn-group"><button className="btn">⬇ Export</button><button className="btn">📊 Performance</button><button className="btn btn-primary" onClick={()=>setAddTeacher(true)}>+ Add teacher</button></div>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:12,marginBottom:20}}>
-        {[{icon:'👨‍🏫',label:'Total staff',value:TEACHERS.length,sub:'active',cls:'info',bg:'var(--blue-dim)',color:'var(--blue)'},{icon:'✅',label:'Present',value:teacherList.filter(t=>t.status==='Present').length,sub:'today',cls:'up',bg:'var(--green-dim)',color:'var(--green)'},{icon:'📚',label:'Classes',value:124,sub:'scheduled',cls:'info',bg:'var(--purple-dim)',color:'var(--purple)'},{icon:'📋',label:'Reports',value:12,sub:'pending',cls:'warn',bg:'var(--amber-dim)',color:'var(--amber)'}].map(m=>(
+        {[{icon:'👨‍🏫',label:'Total staff',value:teacherList.length,sub:'active',cls:'info',bg:'var(--blue-dim)',color:'var(--blue)'},{icon:'✅',label:'Present',value:teacherList.filter(t=>t.status==='Present').length,sub:'today',cls:'up',bg:'var(--green-dim)',color:'var(--green)'},{icon:'📚',label:'Classes',value:124,sub:'scheduled',cls:'info',bg:'var(--purple-dim)',color:'var(--purple)'},{icon:'📋',label:'Reports',value:12,sub:'pending',cls:'warn',bg:'var(--amber-dim)',color:'var(--amber)'}].map(m=>(
           <div key={m.label} style={{background:'var(--bg2)',border:'1px solid var(--border)',borderRadius:12,padding:'14px 16px'}}>
             <div style={{width:36,height:36,borderRadius:10,background:m.bg,color:m.color,display:'flex',alignItems:'center',justifyContent:'center',fontSize:17,marginBottom:10}}>{m.icon}</div>
             <div style={{fontSize:11,color:'var(--text3)',textTransform:'uppercase',letterSpacing:'.04em',marginBottom:4}}>{m.label}</div>
