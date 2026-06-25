@@ -96,7 +96,7 @@ export default function Students(){
   useEffect(()=>{
     getStudents().then(r=>{
       const data = r.data.results || [];
-      setApiStudents(data.map(s=>({
+      setStudents(data.map(s=>({
         id: s.student_id,
         name: s.full_name,
         initials: s.full_name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase(),
