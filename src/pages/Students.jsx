@@ -93,6 +93,28 @@ function StudentDrawer({student,idx,onClose}){
 }
 
 export default function Students(){
+  const [apiStudents, setApiStudents] = useState([]);
+  useEffect(()=>{
+    getStudents().then(r=>{
+      const data = r.data.results || [];
+      setApiStudents(data.map(s=>({
+        id: s.student_id,
+        name: s.full_name,
+        initials: s.full_name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase(),
+        cls: s.cls ? s.cls.split('-')[0] : 'Class 8',
+        sec: s.cls ? s.cls.split('-')[1] || 'A' : 'A',
+        gender: s.gender === 'F' ? 'Female' : 'Male',
+        dob: '2010-01-01',
+        parent: s.parent || '',
+        phone: s.phone || '',
+        att: s.att || 95,
+        fee: s.fee || 'Paid',
+        risk: s.risk || 'Low',
+        results: [{sub:'English',marks:75,grade:'A'},{sub:'Math',marks:70,grade:'A'},{sub:'Science',marks:72,grade:'A'},{sub:'Bengali',marks:74,grade:'A'}],
+        avBg:'#1E3A5F', avColor:'#3B82F6'
+      })));
+    }).catch(()=>{});
+  },[]);
   const[students,setStudents]=useState(SEED);
   const[filtered,setFiltered]=useState(SEED);
   const[view,setView]=useState('table');
