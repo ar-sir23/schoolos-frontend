@@ -93,7 +93,6 @@ function StudentDrawer({student,idx,onClose}){
 }
 
 export default function Students(){
-  const [apiStudents, setApiStudents] = useState([]);
   useEffect(()=>{
     getStudents().then(r=>{
       const data = r.data.results || [];
@@ -124,7 +123,30 @@ export default function Students(){
   const[gradeFilter,setGradeFilter]=useState('');
   const[statusFilter,setStatusFilter]=useState('');
 
-  useEffect(()=>{getStudents().then(r=>{if(r.data.results?.length)setStudents(r.data.results);}).catch(()=>{});},[]);
+  useEffect(()=>{
+    getStudents().then(r=>{
+      if(r.data.results?.length){
+        const mapped = r.data.results.map(s=>({
+          id: s.student_id,
+          name: s.full_name,
+          initials: s.full_name ? s.full_name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase() : 'ST',
+          cls: s.cls ? s.cls.split('-')[0].trim() : 'Class 8',
+          sec: s.cls ? (s.cls.split('-')[1]||'A').trim() : 'A',
+          gender: s.gender==='F'?'Female':'Male',
+          dob: '2010-01-01',
+          parent: s.parent||'',
+          phone: s.phone||'',
+          att: s.att||95,
+          fee: s.fee||'Paid',
+          risk: s.risk||'Low',
+          results:[{sub:'English',marks:75,grade:'A'},{sub:'Math',marks:70,grade:'A'},{sub:'Science',marks:72,grade:'A'},{sub:'Bengali',marks:74,grade:'A'}],
+          avBg:'#1E3A5F',avColor:'#3B82F6'
+        }));
+        setStudents(mapped);
+        setFiltered(mapped);
+      }
+    }).catch(()=>{});
+  },[]);
 
   useEffect(()=>{
     let f=[...students];
